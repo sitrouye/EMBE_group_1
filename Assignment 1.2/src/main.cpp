@@ -19,7 +19,7 @@ int main()
   while (1)
   {
     
-    _delay_ms(1000);
+    _delay_ms(7*2*100/15000*60*1000);
     if encoder_1.is_hi(){
       count += 1;
     }
