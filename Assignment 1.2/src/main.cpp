@@ -1,5 +1,3 @@
-
-
 #include <util/delay.h>
 #include <digital_out.h>
 #include <digital_in.h>
@@ -20,7 +18,7 @@ int main()
   {
     
     _delay_ms(7*2*100/15000*60*1000);
-    if encoder_1.is_hi(){
+    if(encoder_1.is_hi()){
       count += 1;
     }
     
