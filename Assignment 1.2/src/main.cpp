@@ -12,25 +12,28 @@ int main()
   encoder_1.init();
   encoder_2.init();
   int count = 0;
-  int state = 0;
+  bool state = encoder_1.is_hi();
+  bool last = encoder_1.is_hi();
 
   while (1)
   {
     double ts = 7*2*100/15000*60*1000; //maximum sampling rate
     _delay_ms(ts); //check state of the encoder every ts (ts not too big to not miss any change of state of the encoder)
-    
-    if (state == 1){
-      if (encoder_1.is_lo()){
-        count += 1;
-        state = 0;
+    bool state = encoder_1.is_hi();
+    if (state =! last){
+      if (encoder_2.is_lo()){
+        count -= 1;
+
+        led.toggle();
       }
-    }
-    if (state == 0){
-      if (encoder_1.is_hi()){
+      if (encoder_2.is_hi()){
         count += 1;
-        state = 1;
+
+        led.toggle();
       }
+      last = state;
     }
+
   }
 
     
