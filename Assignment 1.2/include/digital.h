@@ -40,3 +40,24 @@ class Digital_in {
         uint8_t pinmaskb;
 };
 
+class Digital_in_portd {
+    public:
+    Digital_in_portd(uint8_t port_d) {
+        pinmaskd = (1 <<port_d);
+    }
+    void init() {
+        DDRD &= ~(1 << DDD2); // set the PD2 pin as input
+        PORTD |= (1 << PORTD2); // enable pull-up resistor on PD2
+        EICRA |= (1 << ISC00); //select event sensitivity : here if any logic changes
+        EIMSK |= (1 << INT0); // Turns on INT0
+
+    }
+    bool is_hi() const {
+        return (PIND & pinmaskd) != 0;
+    }
+    bool is_lo() const { 
+        return !is_hi(); }
+    private:
+        uint8_t pinmaskd;
+};
+

@@ -2,12 +2,14 @@
 
 #include <Arduino.h>
 #include <digital.h>
-#include <timer_msec.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
 
 Digital_out led(5);     // D13
-Digital_in  encoder_A(1); // D9 (PB1)
+Digital_in_portd encoder_A(2); // (PD2)
 Digital_in  encoder_B(2); // D10 (PB2)
-Timer_msec timer;
+
 volatile int count = 0;
 volatile bool last = true;
 
@@ -22,13 +24,7 @@ int main() {
   encoder_A.init();
   encoder_B.init();
 
-
-
-  // const uint16_t TS_US = 182;
-  double samp_rate = 1400*155/(60*1000);
-  double ts = 1/samp_rate;
-  timer.init(ts,100);
-  sei();
+  sei(); // enable interrupts
 
  
 
@@ -42,26 +38,28 @@ int main() {
 }
 
 
-ISR(TIMER1_COMPA_vect)
+ISR(INT0_vect)
 {
-  // action to be done every ts
-  led.toggle();
-  double samp_rate = 1400*155/(60*1000);
-  double ts = 1/samp_rate;
-  _delay_ms(ts);        
-  bool state = encoder_A.is_hi();  // read channel A
+  // action to be done on logic change of encoder_A
 
-  if (state != last) {   
-      if (encoder_B.is_lo()) {
-          count -= 1;    // one direction
-          led.toggle();  // blink LED
-      }
-      if (encoder_B.is_hi()) {
-          count += 1;    // other direction
-          led.toggle();  // blink LED
-      }
-      last = state;      // update previous state
+  
+  if (encoder_B.is_lo() && encoder_A.is_lo()) {
+      count -= 1;    // one direction
+      led.toggle();  // blink LED
   }
+  else if (encoder_B.is_hi() && encoder_A.is_hi()) {
+      count -= 1;    // one direction
+      led.toggle();  // blink LED
+  }
+  else if (encoder_B.is_hi() && encoder_A.is_lo()) {
+      count += 1;    // other direction
+      led.toggle();  // blink LED
+  }
+  else if (encoder_B.is_lo() && encoder_A.is_hi()) {
+    count += 1;    // other direction
+    led.toggle();  // blink LED
+  }
+
 }
 
 
