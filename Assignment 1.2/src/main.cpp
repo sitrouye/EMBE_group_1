@@ -17,7 +17,6 @@ volatile bool last = true;
 int main() {
 
   Serial.begin(9600);
-  // Pins: LED PB5, Encoder A=PB1, B=PB2
 
 
   led.init();
@@ -31,12 +30,15 @@ int main() {
   while (1) {
 
 
-    Serial.println(count);
 }
 
   return 0;
 }
 
+void loop() 
+  {
+    Serial.println(count);  
+}
 
 ISR(INT0_vect)
 {
