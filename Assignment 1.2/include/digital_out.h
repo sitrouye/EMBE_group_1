@@ -1,3 +1,6 @@
+#pragma once
+
+
 #include <stdint.h>
 #include <avr/io.h>
 
@@ -27,3 +30,4 @@ class Digital_out
     private:
         int8_t pin_mask; //private so that nobody can fiddle with it
 };
+

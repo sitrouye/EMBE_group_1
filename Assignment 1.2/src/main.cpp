@@ -1,44 +1,47 @@
 #include <util/delay.h>
-#include <digital_out.h>
-#include <digital_in.h>
 
-int main()
-{
-  Digital_out led(5);   // PB5 Arduino Nano built-in LED 
-  Digital_in encoder_1(1);
-  Digital_in encoder_2(2);
-  
+#include <Arduino.h>
+#include <digital.h>
+
+
+
+int main() {
+
+  Serial.begin(9600);
+  // Pins: LED PB5, Encoder A=PB1, B=PB2
+  Digital_out led(5);     // D13
+  Digital_in  encoder_A(1); // D9 (PB1)
+  Digital_in  encoder_B(2); // D10 (PB2)
+
   led.init();
-  encoder_1.init();
-  encoder_2.init();
-  int count = 0;
-  bool last = encoder_1.is_hi();
+  encoder_A.init();
+  encoder_B.init();
 
-  while (1)
-  {
-    //double ts = 7*2*100/15000*60*1000; //maximum sampling rate
-    _delay_ms(100); //check state of the encoder every ts (ts not too big to not miss any change of state of the encoder)
-    bool state = encoder_1.is_hi();
-    if (state != last){
-      if (encoder_2.is_lo()){
-        count -= 1;
+  volatile int count = 0;
 
-        led.toggle();
-      }
-      if (encoder_2.is_hi()){
-        count += 1;
+  // const uint16_t TS_US = 182;
 
-        led.toggle();
-      }
-      last = state;
+  bool last = encoder_A.is_hi();  // initial state of A
+
+while (1) {
+    _delay_ms(100);        // too slow
+    bool state = encoder_A.is_hi();  // read channel A
+
+    if (state != last) {   
+        if (encoder_B.is_lo()) {
+            count -= 1;    // one direction
+            led.toggle();  // blink LED
+        }
+        if (encoder_B.is_hi()) {
+            count += 1;    // other direction
+            led.toggle();  // blink LED
+        }
+        last = state;      // update previous state
     }
-
-  }
-
-    
-
-
-  
+    Serial.println(count);
+}
 
   return 0;
 }
+
+
