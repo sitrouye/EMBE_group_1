@@ -13,6 +13,7 @@ Digital_in  encoder_B(2); // D10 (PB2)
 volatile int count = 0;
 volatile bool last = true;
 
+volatile int count_last = 0;
 
 int main() {
 
@@ -28,17 +29,23 @@ int main() {
  
 
   while (1) {
+    _delay_ms(1000);
+    
+    double speed = double(count - count_last) / double(1 * 7*100); //speed in tr/s
+    count_last = count;
+    Serial.println(speed);
+    Serial.println(count);
 
 
-}
+  }
 
   return 0;
 }
 
-void loop() 
-  {
-    Serial.println(count);  
-}
+// void loop() 
+//   {
+//     Serial.println(count);  
+// }
 
 ISR(INT0_vect)
 {
@@ -61,6 +68,8 @@ ISR(INT0_vect)
     count += 1;    // other direction
     led.toggle();  // blink LED
   }
+
+
 
 }
 
