@@ -56,8 +56,30 @@ class Digital_in_portd {
         return (PIND & pinmaskd) != 0;
     }
     bool is_lo() const { 
-        return !is_hi(); }
+        return !is_hi(); 
+    }
     private:
         uint8_t pinmaskd;
 };
 
+
+// class Encoder{
+//     public:
+//     Encoder(uint8_t port_d, uint8_t port_b);
+
+
+//     void init() {
+//         A.init();
+//         B.init();
+//         count = 0;
+
+//     }
+
+
+//     private:
+//         Digital_in_portd A;
+//         Digital_in B;
+//         int count;
+
+
+// }
