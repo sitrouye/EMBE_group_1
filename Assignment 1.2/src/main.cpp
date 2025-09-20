@@ -116,23 +116,23 @@ int main() {
     
 
 
-  duty_cycle = 99;
-  AIN1.off();
-  AIN2.set(duty_cycle);
+  // duty_cycle = 99;
+  // AIN1.off();
+  // AIN2.set(duty_cycle);
 
-  _delay_ms(100); //time for the motor to accelerate
+  // _delay_ms(100); //time for the motor to accelerate
 
-  int count_1 = count;
-  int delay = 2; //2ms to respect update rate (350Hz)
-  _delay_ms(delay);
-  double speed = double(count_1 - count_last) / double(delay * 0.001 * 1400); //first computing of the speed to have an idea for the reference speed
-  ref = speed/2;
-  Serial.print("\n speed: ");
-  Serial.println(speed);
-  Serial.print("\n ref: ");
-  Serial.println(ref);
+  // int count_1 = count;
+  // int delay = 2; //2ms to respect update rate (350Hz)
+  // _delay_ms(delay);
+  // double speed = double(count_1 - count_last) / double(delay * 0.001 * 1400); //first computing of the speed to have an idea for the reference speed
+  // ref = speed/2;
+  // Serial.print("\n speed: ");
+  // Serial.println(speed);
+  // Serial.print("\n ref: ");
+  // Serial.println(ref);
   int i =0;
-  while(i<100){
+  while(i<500){
     ref = 0;
     int delay = 2; //2ms to respect update rate (350Hz)
     _delay_ms(delay);
@@ -140,7 +140,7 @@ int main() {
     double speed = double(count - count_last) / double(delay * 0.001 * 1400); //speed in rot/s
     actual = speed;
     count_last = count;
-    timer += 1;
+    timer += 2;
     // if (speed != 0 && (timer%1000 == 0)){
     //   Serial.print("\n speed: ");
     //   Serial.println(speed);
@@ -156,14 +156,18 @@ int main() {
     // Serial.println(speed);
     // Serial.print("\n ref: ");
     // Serial.println(ref);
-    Serial.print(" ");
-    Serial.println(duty_cycle);
-    Serial.print(" ");
-    Serial.println(u);
-    Serial.print(" ");
-    Serial.println(speed);
-    Serial.print(" ");
-    Serial.println(ref);
+    Serial.print(">duty_cycle:");
+    Serial.print(duty_cycle);
+    Serial.print(",u:");
+    Serial.print(u);
+    Serial.print(",speed:");
+    Serial.print(speed);
+    Serial.print(",ref:");
+    Serial.print(ref);
+    Serial.print(",time_ms:");
+    Serial.print(timer);
+    Serial.print("\r\n");
+
     i++;
   }
   
@@ -175,7 +179,7 @@ int main() {
     double speed = double(count - count_last) / double(delay * 0.001 * 1400); //speed in rot/s
     actual = speed;
     count_last = count;
-    timer += 1;
+    timer += 2;
     // if (speed != 0 && (timer%1000 == 0)){
     //   Serial.print("\n speed: ");
     //   Serial.println(speed);
@@ -186,14 +190,26 @@ int main() {
     AIN2.set(duty_cycle);
 
 
-    Serial.print(" ");
-    Serial.println(duty_cycle);
-    Serial.print(" ");
-    Serial.println(u);
-    Serial.print(" ");
-    Serial.println(speed);
-    Serial.print(" ");
-    Serial.println(ref);
+    // Serial.print(" ");
+    // Serial.println(duty_cycle);
+    // Serial.print(" ");
+    // Serial.println(u);
+    // Serial.print(" ");
+    // Serial.println(speed);
+    // Serial.print(" ");
+    // Serial.println(ref);
+
+    Serial.print(">duty_cycle:");
+    Serial.print(duty_cycle);
+    Serial.print(",u:");
+    Serial.print(u);
+    Serial.print(",speed:");
+    Serial.print(speed);
+    Serial.print(",ref:");
+    Serial.print(ref);
+    Serial.print(",time_ms:");
+    Serial.print(timer);
+    Serial.print("\r\n");
 
   }
 
