@@ -18,6 +18,8 @@ class Digital_out {
     void toggle() {
         PORTB ^= pin_mask;
     }
+
+    
     private:
     uint8_t pin_mask;
 };
