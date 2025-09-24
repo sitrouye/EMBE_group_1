@@ -1,0 +1,9 @@
+@startuml part1 Initialization
+state Operational
+state Initialization 
+Initialization --> Operational 
+Operational --> Initialization : reset command
+Operational : entry/ LED on
+Operational : do/ normal input/output behaviour
+Operational : exit/ LED off
+@enduml
