@@ -1,0 +1,15 @@
+@startuml
+[*] --> Initialization
+state Initialization
+state Operational
+
+Initialization : entry  init_parameters()
+Initialization : exit   send_bootup_message()
+
+Initialization --> Operational : init_complete
+
+Operational : entry  led_on()
+Operational : entry  enable_motor_io()
+
+Operational --> Initialization : reset  reset_system()
+@enduml

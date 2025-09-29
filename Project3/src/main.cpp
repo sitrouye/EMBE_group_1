@@ -1,18 +1,22 @@
 #include <Arduino.h>
+#include "Controller.h"
+#include "State.h"
+#include "digital.h"
 
-// put function declarations here:
-int myFunction(int, int);
+// Use Arduino’s onboard LED
+Digital_out led(LED_BUILTIN);
+MotorController controller(new Initialization(&led), &led);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    Serial.begin(9600);
+    delay(2000);   // give Serial Monitor time to connect
+    led.init();
+    Serial.println("System starting...");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    if (Serial.available() > 0) {
+        char cmd = Serial.read();
+        controller.handleCommand(cmd);
+    }
 }
