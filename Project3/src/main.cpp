@@ -14,6 +14,7 @@ void setup() {
     delay(2000);   // give Serial Monitor time to connect
     led.init();
     Serial.println("System starting...");
+    sei();
 }
 
 void loop() {
@@ -28,4 +29,11 @@ void loop() {
             controller.handleCommand('s');
         }
     }
+}
+
+
+ISR(INT0_vect){
+    //action to be done on logic change of FLT
+    flt = true;
+
 }
