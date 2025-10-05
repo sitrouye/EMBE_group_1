@@ -20,7 +20,50 @@ void Operational::handleCommand(MotorController* controller, char cmd) {
     if (cmd == 'r') {
         Serial.println("Resetting...");
         controller->setState(new Initialization(led));
-    } else {
+    } 
+    else if (cmd = 'p'){
+        Serial.println("set pre-operational...");
+        controller->setState(new PreOperational(led));
+    }
+    else if (cmd = 's'){
+        Serial.println("Stop");
+        controller->setState(new Stopped(led));
+    }
+    else {
         Serial.println("Unknown command.");
     }
+}
+
+
+
+void Stopped::handleCommand(MotorController* controller, char cmd) {
+    if (cmd == 'r') {
+        Serial.println("Resetting...");
+        controller->setState(new Initialization(led));
+    } 
+    else if (cmd = 'p'){
+        Serial.println("set pre-operational...");
+        controller->setState(new PreOperational(led));
+    }
+    else if (cmd = 'o'){
+        Serial.println("set operational...");
+        controller->setState(new Operational(led));
+    }
+    
+    else {
+        Serial.println("Unknown command.");
+    }
+}
+
+
+
+void Stopped::enter(MotorController* controller) {
+    led->on();
+    controller->stop();
+    Serial.println("System operational. Type 'r' to reset.");
+}
+
+void Stopped::during(MotorController* controller){
+    led->toggle();
+    delay(250);
 }

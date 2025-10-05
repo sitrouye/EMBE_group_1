@@ -14,3 +14,7 @@ void MotorController::setState(State* state) {
 void MotorController::handleCommand(char cmd) {
     currentState->handleCommand(this, cmd);
 }
+
+void MotorController::stop() {
+    
+}

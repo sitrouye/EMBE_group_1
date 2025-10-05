@@ -190,15 +190,6 @@ int main() {
     AIN2.set(duty_cycle);
 
 
-    // Serial.print(" ");
-    // Serial.println(duty_cycle);
-    // Serial.print(" ");
-    // Serial.println(u);
-    // Serial.print(" ");
-    // Serial.println(speed);
-    // Serial.print(" ");
-    // Serial.println(ref);
-
     Serial.print(">duty_cycle:");
     Serial.print(duty_cycle);
     Serial.print(",u:");

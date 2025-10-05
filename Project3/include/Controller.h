@@ -8,5 +8,6 @@ public:
     MotorController(State* initial, Digital_out* led);
     void setState(State* state);
     void handleCommand(char cmd);
+    void stop(void);
 };
 
