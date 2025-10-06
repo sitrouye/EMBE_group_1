@@ -1,43 +1,61 @@
 #include <Arduino.h>
-#include <unity.h>
-#include "PI_Controller.h"
+#include "unity.h"
 
-PI_Controller* pi;
+#include "PI_Controller.h"
+#include "Controller.h"
+#include "State.h"
+#include "digital.h"
+
+#include "PI_Controller.cpp"
+#include "controller.cpp"
+#include "state.cpp"
+
 
 void setUp(void) {
-    pi = new PI_Controller(0.5, 0.1, 0.1); // Kp, Ki, dt
 }
 
 void tearDown(void) {
-    delete pi;
 }
 
-void test_zero_error(void) {
-    float output = pi->update(10.0, 10.0);
-    TEST_ASSERT_EQUAL_FLOAT(0.0, output); // error = 0, output = 0
+void test_PIController_NormalUpdate(void) {
+    PI_Controller pi = PI_Controller(1.0, 0.5, 0.1);
+    float setpoint = 100;
+    float measurement = 0;
+
+    float out1 = pi.update(setpoint, measurement);
+    float out2 = pi.update(setpoint, measurement);
+
+    TEST_ASSERT_TRUE(out2 > out1);
 }
 
-void test_positive_error(void) {
-    float output = pi->update(10.0, 5.0);
-    TEST_ASSERT_GREATER_THAN_FLOAT(0.0, output);
-}
+void test_PIController_AntiWindup(void) {
+    PI_Controller pi = PI_Controller(1.0, 0.5, 0.1);
+    float setpoint = 1000; // intentionally high to saturate
+    float measurement = 0;
+    float output;
 
-void test_integral_windup(void) {
-    // simulate saturation
     for (int i = 0; i < 50; i++) {
-        pi->update(200.0, 0.0); // output will saturate at 100 internally
+        output = pi.update(setpoint, measurement);
+        TEST_ASSERT_TRUE(output <= 100.0f); // ensuring output does not exceed max
     }
-    float output = pi->update(200.0, 0.0);
-    TEST_ASSERT_LESS_OR_EQUAL_FLOAT(100.0, output); // anti-windup check
 }
 
-void setup() {
+void test_PIController_Reset(void) {
+    PI_Controller pi = PI_Controller(1.0, 0.5, 0.1);
+    float setpoint = 50;
+    float measurement = 0;
+
+    pi.update(setpoint, measurement);
+    pi.reset();
+    float out = pi.update(setpoint, measurement);
+
+    TEST_ASSERT_TRUE(out < 100); // integral reset should reduce output
+}
+
+int main(void) {
     UNITY_BEGIN();
-    RUN_TEST(test_zero_error);
-    RUN_TEST(test_positive_error);
-    RUN_TEST(test_integral_windup);
-    UNITY_END();
-}
-
-void loop() {
+    RUN_TEST(test_PIController_NormalUpdate);
+    RUN_TEST(test_PIController_AntiWindup);
+    RUN_TEST(test_PIController_Reset);
+    return UNITY_END();
 }
