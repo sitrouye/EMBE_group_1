@@ -1,8 +1,7 @@
-#include "controller.h"
+#include "Controller.h"
 
-MotorController::MotorController(State* initial, Digital_out* led)
-    : currentState(initial), led(led) {
-    
+MotorController::MotorController(State* initial, Digital_out* led, MotorControllerBase* ctrl)
+    : currentState(initial), led(led), ctrl(ctrl) {
 }
 
 void MotorController::setState(State* state) {

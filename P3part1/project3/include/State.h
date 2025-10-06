@@ -1,5 +1,5 @@
 #pragma once
-#include "Digital.h"
+#include "digital.h"
 
 class MotorController; // forward declaration
 

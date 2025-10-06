@@ -2,7 +2,6 @@
 #include "controller.h"
 #include <Arduino.h>
 
-// extern pre-allocated states from main.cpp
 extern Initialization initState;
 extern Operational operationalState;
 
