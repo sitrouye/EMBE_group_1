@@ -1,0 +1,16 @@
+@startuml Part1_StateMachine
+
+[*] --> Initialization : boot-up
+
+Initialization --> Operational : set operational
+Initialization --> Initialization : reset
+Operational --> Initialization : reset
+
+Initialization : entry / initialize parameters
+Initialization : exit / send Boot-up message
+
+Operational : entry / LED ON
+Operational : exit / LED OFF
+Operational : do / normal input-output behavior
+
+@enduml
