@@ -27,3 +27,25 @@ public:
 private:
     Digital_out* led;
 };
+
+
+class PreOperational : public State {
+public:
+    PreOperational(Digital_out* led) : led(led) {}
+    void enter(MotorController* controller) override;
+    // void during(MotorController* controller) override;
+    void handleCommand(MotorController* controller, char cmd) override;
+private:
+    Digital_out* led;
+};
+
+
+class Stopped : public State {
+public:
+    Stopped(Digital_out* led) : led(led) {}
+    void enter(MotorController* controller) override;
+    // void during(MotorController* controller) override;
+    void handleCommand(MotorController* controller, char cmd) override;
+private:
+    Digital_out* led;
+};

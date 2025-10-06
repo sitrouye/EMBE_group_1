@@ -36,24 +36,6 @@ void Operational::handleCommand(MotorController* controller, char cmd) {
 
 
 
-void Stopped::handleCommand(MotorController* controller, char cmd) {
-    if (cmd == 'r') {
-        Serial.println("Resetting...");
-        controller->setState(new Initialization(led));
-    } 
-    else if (cmd == 'p'){
-        Serial.println("set pre-operational...");
-        controller->setState(new PreOperational(led));
-    }
-    else if (cmd == 'o'){
-        Serial.println("set operational...");
-        controller->setState(new Operational(led));
-    }
-    
-    else {
-        Serial.println("Unknown command.");
-    }
-}
 
 
 
