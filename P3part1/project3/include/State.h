@@ -12,11 +12,13 @@ public:
 
 class Initialization : public State {
 public:
-    Initialization(Digital_out* led) : led(led) {}
+    Initialization(Digital_out* led) : led(led){}
     void enter(MotorController* controller) override;
     void handleCommand(MotorController* controller, char cmd) override;
 private:
     Digital_out* led;
+
+
 };
 
 class Operational : public State {
@@ -26,17 +28,19 @@ public:
     void handleCommand(MotorController* controller, char cmd) override;
 private:
     Digital_out* led;
+
 };
 
 
 class PreOperational : public State {
 public:
-    PreOperational(Digital_out* led) : led(led) {}
+    PreOperational(Digital_out* led) : led(led){}
     void enter(MotorController* controller) override;
     // void during(MotorController* controller) override;
     void handleCommand(MotorController* controller, char cmd) override;
 private:
     Digital_out* led;
+
 };
 
 
@@ -48,4 +52,5 @@ public:
     void handleCommand(MotorController* controller, char cmd) override;
 private:
     Digital_out* led;
+
 };
