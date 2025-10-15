@@ -114,7 +114,7 @@ ISR(TIMER1_COMPB_vect)
 }
 
 ISR(INT1_vect){
-    flt_pin.interr();
+    flt = true;
 }
 ISR(INT0_vect){
     mot.incr();

@@ -43,94 +43,10 @@ int main() {
  
   AIN2.pin.off();
   AIN1.off();
-  // while (1) {
-
-    // if (Serial.available() > 0){
-
-    //   // read the incoming byte:
-    //   event = Serial.read();
-
-    //   // say what you got:
-    //   Serial.print("\n I received: ");
-    //   Serial.println(event, DEC);
-
-    //   // you can compare the value received to a character constant, like 'h'.
-    //   if (event == 's'){
-    //     AIN2.set(0);
-    //     AIN1.off();
-    //   }
-    //   // if (event == 'r'){
-    //   //   AIN1.off();
-    //   //   AIN2.set(duty_cycle);
-    //   //   while (actual != ref){
-          
-
-    //   //     _delay_ms(10);
-          
-    //   //     double speed = double(count - count_last) / double(0.01 * 1400); //speed in rot/s
-    //   //     actual = speed;
-    //   //     count_last = count;
-    //   //     timer += 1;
-    //   //     if (speed != 0){
-    //   //       Serial.print("\n speed: ");
-    //   //       Serial.println(speed);
-
-    //   //       Serial.print("\n timer (*10 in ms): ");
-
-    //   //       Serial.println(timer);
-    //   //     }
-
-    //   //     duty_cycle += int(Contr.update(ref, actual));
-    //   //     AIN2.set(duty_cycle); //change duty cycle for getting to the right speed
-          
-    //   //     Serial.print("\n duty cycle : ");
-    //   //     Serial.println(duty_cycle);
-        
-    //   //   }
-    //   // }
-    //   if (event == 'o'){
-    //     AIN1.off();
-    //     AIN2.set(0);
-
-    //   }
-
-    //   if (event == 'h'){
-    //     AIN1.off();
-    //     AIN2.set(50);
-    //     Serial.print("\n duty cycle : 50");
-
-    //   }
-    //   if (event == 'q'){
-    //     AIN1.off();
-    //     AIN2.set(25);
-    //     Serial.print("\n duty cycle : 25");
-    //   }
-  
-    //   if (event == 'f'){
-    //     AIN2.set(99);
-    //     AIN1.off();
-    //   }
-      
-    // }
-
-    
+ 
 
 
-  // duty_cycle = 99;
-  // AIN1.off();
-  // AIN2.set(duty_cycle);
 
-  // _delay_ms(100); //time for the motor to accelerate
-
-  // int count_1 = count;
-  // int delay = 2; //2ms to respect update rate (350Hz)
-  // _delay_ms(delay);
-  // double speed = double(count_1 - count_last) / double(delay * 0.001 * 1400); //first computing of the speed to have an idea for the reference speed
-  // ref = speed/2;
-  // Serial.print("\n speed: ");
-  // Serial.println(speed);
-  // Serial.print("\n ref: ");
-  // Serial.println(ref);
   int i =0;
   while(i<500){
     ref = 0;
@@ -141,21 +57,11 @@ int main() {
     actual = speed;
     count_last = count;
     timer += 2;
-    // if (speed != 0 && (timer%1000 == 0)){
-    //   Serial.print("\n speed: ");
-    //   Serial.println(speed);
-    // }
+
     double u =  Contr.update(ref, speed);
     duty_cycle = duty_cycle + static_cast<int>(u);
     AIN2.set(duty_cycle);
-    // Serial.print("\n duty cycle: ");
-    // Serial.println(duty_cycle);
-    // Serial.print("\n correction: ");
-    // Serial.println(u);
-    // Serial.print("\n actual: ");
-    // Serial.println(speed);
-    // Serial.print("\n ref: ");
-    // Serial.println(ref);
+
     Serial.print(">duty_cycle:");
     Serial.print(duty_cycle);
     Serial.print(",u:");
@@ -180,10 +86,7 @@ int main() {
     actual = speed;
     count_last = count;
     timer += 2;
-    // if (speed != 0 && (timer%1000 == 0)){
-    //   Serial.print("\n speed: ");
-    //   Serial.println(speed);
-    // }
+
 
     double u =  Contr.update(ref, speed);
     duty_cycle = duty_cycle + static_cast<int>(u);
