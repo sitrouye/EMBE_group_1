@@ -1,0 +1,7 @@
+cd ~/EMBE_group_1/project4
+make                               # build kernel module
+g++ -O2 controller_dir.cpp -o controller_dir -lgpiod
+gcc -O2 -o stop_motor stop_motor.c -lgpiod
+gcc -O2 -o speed_read speed_read.c
+gcc -O2 -o encoder_read encoder_read.c
+gcc -O2 -o jitter_logger jitter_logger.c
